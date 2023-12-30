@@ -31,5 +31,4 @@ jobs:
 
       - run: |
           npm ci
-          cd kubernetes && ENV=production npx ts-node manifest.ts && cd ..
-          skaffold run -n rallly
+          npm run k8s:deploy:production

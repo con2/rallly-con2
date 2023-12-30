@@ -1,7 +1,8 @@
 {
   "scripts": {
     "k8s:generate": "cd kubernetes && ts-node manifest.ts",
-    "k8s:dev": "npm run k8s:generate && skaffold dev"
+    "k8s:dev": "npm run k8s:generate && skaffold dev",
+    "k8s:deploy:production": "ENV=production npm run k8s:generate && skaffold run -n rallly"
   },
   "devDependencies": {
     "ts-node": "^10.9.2",
