@@ -1,0 +1,35 @@
+name: cicd
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - id: cache-bin
+        uses: actions/cache@v3
+        with:
+          path: bin
+          key: ${{ runner.os }}-bin-2
+      - if: steps.cache-bin.outputs.cache-hit != 'true'
+        run: |
+          mkdir bin
+          curl -Lo bin/skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
+          curl -Lo bin/kubectl https://dl.k8s.io/release/v1.22.0/bin/linux/amd64/kubectl
+          chmod +x bin/skaffold bin/kubectl
+      - run: echo "$PWD/bin" >> $GITHUB_PATH
+
+      - run: |
+          npm ci
+          cd kubernetes && ENV=production npx ts-node manifest.ts && cd ..
+          skaffold run -n rallly

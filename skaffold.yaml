@@ -1,0 +1,9 @@
+apiVersion: skaffold/v2beta9
+kind: Config
+metadata:
+  name: rallly
+deploy:
+  statusCheckDeadlineSeconds: 300
+  kubectl:
+    manifests:
+    - kubernetes/*.json
