@@ -100,7 +100,7 @@ const env = Object.entries({
   SMTP_HOST: "mailer.b2.fi",
   SMTP_TLS_ENABLED: true,
   OIDC_NAME: "Kompassi",
-  OIDC_DISCOVERY_URL: `${kompassiBaseUrl}/oidc/.well-known/openid-configuration`,
+  OIDC_DISCOVERY_URL: `${kompassiBaseUrl}/oidc/.well-known/openid-configuration/`,
   OIDC_CLIENT_ID: secretKeyRef("OIDC_CLIENT_ID"),
   OIDC_CLIENT_SECRET: secretKeyRef("OIDC_CLIENT_SECRET"),
 }).map(([key, value]) => {
