@@ -12,9 +12,11 @@ const secret = {
   },
   data: {
     // fill these in, DO NOT COMMIT THE RESULT
-    KOMPASSI_OIDC_CLIENT_ID: b64(""),
-    KOMPASSI_OIDC_CLIENT_SECRET: b64(""),
-    NEXTAUTH_SECRET: b64(""),
+    DATABASE_URL: b64(""),
+    OIDC_CLIENT_SECRET: b64(""),
+    OIDC_CLIENT_ID: b64(""),
+    // generate using openssl rand -hex 32
+    SECRET_PASSWORD: b64(""),
   },
 };
 
