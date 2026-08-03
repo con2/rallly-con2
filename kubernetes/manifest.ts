@@ -140,6 +140,12 @@ const deployment = {
           runAsGroup: 1000,
           fsGroup: 1000,
         },
+        volumes: [
+          {
+            name: "next-temp",
+            emptyDir: {},
+          },
+        ],
         initContainers: [],
         containers: [
           {
@@ -153,6 +159,12 @@ const deployment = {
             },
             startupProbe: probe,
             livenessProbe: probe,
+            volumeMounts: [
+              {
+                name: "next-temp",
+                mountPath: "/app/apps/web/.next/cache",
+              },
+            ],
           },
         ],
       },
