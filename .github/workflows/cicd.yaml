@@ -10,22 +10,22 @@ jobs:
     runs-on: qb-arc-runners
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 20
           cache: npm
 
       - id: cache-bin
-        uses: actions/cache@v3
+        uses: actions/cache@v6
         with:
           path: bin
-          key: ${{ runner.os }}-bin-2
+          key: ${{ runner.os }}-bin-3
       - if: steps.cache-bin.outputs.cache-hit != 'true'
         run: |
           mkdir bin
           curl -Lo bin/skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
-          curl -Lo bin/kubectl https://dl.k8s.io/release/v1.22.0/bin/linux/amd64/kubectl
+          curl -Lo bin/kubectl https://dl.k8s.io/release/v1.36.2/bin/linux/amd64/kubectl
           chmod +x bin/skaffold bin/kubectl
       - run: echo "$PWD/bin" >> $GITHUB_PATH
 
