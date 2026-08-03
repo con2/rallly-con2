@@ -244,7 +244,8 @@ const tls = tlsEnabled
 const ingressAnnotations = tlsEnabled
   ? {
       "cert-manager.io/cluster-issuer": clusterIssuer,
-      "nginx.ingress.kubernetes.io/ssl-redirect": "true",
+      "traefik.ingress.kubernetes.io/router.middlewares":
+        "default-https-redirect@kubernetescrd",
     }
   : {};
 
@@ -257,6 +258,7 @@ const ingress = {
     annotations: ingressAnnotations,
   },
   spec: {
+    ingressClassName: "traefik",
     tls,
     rules: [
       {
