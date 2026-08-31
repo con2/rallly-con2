@@ -10,6 +10,7 @@ interface Environment {
 
 type EnvironmentName = "dev" | "production";
 const environmentNames: EnvironmentName[] = ["dev", "production"];
+const initialAdminEmail = "santtu@pajukanta.fi";
 
 const environmentConfigurations: Record<EnvironmentName, Environment> = {
   dev: {
@@ -103,6 +104,7 @@ const env = Object.entries({
   OIDC_DISCOVERY_URL: `${kompassiBaseUrl}/oidc/.well-known/openid-configuration/`,
   OIDC_CLIENT_ID: secretKeyRef("OIDC_CLIENT_ID"),
   OIDC_CLIENT_SECRET: secretKeyRef("OIDC_CLIENT_SECRET"),
+  INITIAL_ADMIN_EMAIL: initialAdminEmail,
 }).map(([key, value]) => {
   if (value instanceof Object) {
     return {
@@ -311,7 +313,7 @@ const secret = {
   },
   data: {
     DATABASE_URL: b64(
-      `postgres://postgres:${insecurePostgresPassword}@postgres:5432/postgres`
+      `postgres://postgres:${insecurePostgresPassword}@postgres:5432/postgres`,
     ),
     OIDC_CLIENT_SECRET: b64("kompassi_insecure_test_client_secret"),
     OIDC_CLIENT_ID: b64("kompassi_insecure_test_client_id"),
