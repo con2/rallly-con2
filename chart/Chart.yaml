@@ -3,4 +3,4 @@ name: rallly
 description: Rallly meeting polls at rallly.con2.fi, signing in with Kompassi OIDC
 type: application
 version: 0.1.0
-appVersion: "latest"
+appVersion: "4.15.3"

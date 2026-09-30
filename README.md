@@ -10,7 +10,7 @@ User friendly redirects to `rallly.con2.fi` (such as `rally.con2.fi`) are manage
 
 ## Deployment
 
-The Helm chart in `chart/` deploys the upstream `lukevella/rallly` image; see `chart/README.md` for the prerequisites and how to pick up a new Rallly release.
+The Helm chart in `chart/` deploys the upstream `lukevella/rallly` image; see `chart/README.md` for the prerequisites and how to upgrade Rallly.
 
 GitHub Actions deploys every commit to `main` into `rallly.con2.fi`, so you should, for the most part, not deploy manually. To check the rendered manifests locally:
 

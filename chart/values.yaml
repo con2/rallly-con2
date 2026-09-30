@@ -2,11 +2,11 @@
 # This file's secret.* fields are obviously-bogus placeholders so `helm template`/`helm lint`
 # work without real secrets -- never deploy with these values as-is.
 
-# Upstream image, not built here. A moving tag is only pulled again when the pod restarts, so a
-# chart deploy alone does not upgrade Rallly (chart/README.md, "Upgrading Rallly").
+# Upstream image, not built here. Upgrading Rallly means bumping the tag (chart/README.md,
+# "Upgrading Rallly").
 image:
   repository: lukevella/rallly
-  tag: latest
+  tag: 4.15.3
 
 hostname: rallly.example.com
 

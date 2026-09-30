@@ -25,14 +25,12 @@ The Kompassi OIDC client must allow the redirect URI `https://<hostname>/api/aut
 
 ## Upgrading Rallly
 
-The image tag is `latest`, and Kubernetes only pulls it again when a pod starts. To pick up a new
-Rallly release, restart the Deployment:
+The image tag is pinned to a Rallly release in `image.tag` in `values.yaml`. To upgrade, read the
+release notes at https://github.com/lukevella/rallly/releases, bump `image.tag` (and `appVersion`
+in `Chart.yaml`) and push to main.
 
-```sh
-kubectl -n rallly rollout restart deployment/rallly
-```
-
-The image's start script applies Rallly's database migrations before the server starts.
+The image's start script applies Rallly's database migrations before the server starts, so a
+downgrade after a release with migrations may not work.
 
 ## One-time cutover from skaffold
 
@@ -50,8 +48,8 @@ routed by an Ingress. Do this by hand once, before merging the switch to `cicd.y
    ```
 
 2. Read the diff against the live objects. Expect only the new Gateway and HTTPRoutes, labels,
-   resources, security context hardening, the preStop sleep and the probes moving to
-   `/api/status`:
+   resources, security context hardening, the preStop sleep, the probes moving to `/api/status`
+   and the image tag `latest` becoming `4.15.3` (the same image):
 
    ```sh
    helm template rallly chart -f chart/values-production.yaml \
