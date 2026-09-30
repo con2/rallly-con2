@@ -1,0 +1,5 @@
+hostname: rallly.con2.fi
+kompassi:
+  baseUrl: https://kompassi.eu
+# Secret `rallly` in namespace rallly is managed out of band.
+existingSecretName: rallly

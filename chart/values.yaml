@@ -1,0 +1,40 @@
+# Real environment values live in values-production.yaml.
+# This file's secret.* fields are obviously-bogus placeholders so `helm template`/`helm lint`
+# work without real secrets -- never deploy with these values as-is.
+
+# Upstream image, not built here. A moving tag is only pulled again when the pod restarts, so a
+# chart deploy alone does not upgrade Rallly (chart/README.md, "Upgrading Rallly").
+image:
+  repository: lukevella/rallly
+  tag: latest
+
+hostname: rallly.example.com
+
+kompassi:
+  baseUrl: https://dev.kompassi.eu
+
+supportEmail: tekniikka@tracon.fi
+
+mail:
+  smtpHostname: mailer.b2.fi
+  smtpTlsEnabled: true
+
+# Seconds the old pod keeps serving after it is told to stop, while Traefik stops routing to it.
+preStopSleepSeconds: 10
+
+# Peak working set on qb was about 1 GB over two weeks; CPU stays well under 0.1 cores.
+resources:
+  rallly:
+    requests: { cpu: 50m, memory: 512Mi }
+    limits: { cpu: "1", memory: 2Gi }
+
+# THE PRODUCTION-RECOMMENDED PATH: point at a pre-existing Secret with keys
+# DATABASE_URL, SECRET_PASSWORD, OIDC_CLIENT_ID, OIDC_CLIENT_SECRET and the chart skips creating
+# its own.
+existingSecretName: ""
+secret:
+  databaseUrl: postgresql://changeme:changeme@postgres:5432/changeme
+  # At least 32 characters.
+  secretPassword: changemechangemechangemechangeme
+  oidcClientId: changeme
+  oidcClientSecret: changeme

@@ -5,30 +5,19 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 jobs:
   deploy:
     runs-on: qb-arc-runners
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    environment: production
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
-        with:
-          node-version: 20
-          cache: npm
-
-      - id: cache-bin
-        uses: actions/cache@v6
-        with:
-          path: bin
-          key: ${{ runner.os }}-bin-3
-      - if: steps.cache-bin.outputs.cache-hit != 'true'
-        run: |
-          mkdir bin
-          curl -Lo bin/skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
-          curl -Lo bin/kubectl https://dl.k8s.io/release/v1.36.2/bin/linux/amd64/kubectl
-          chmod +x bin/skaffold bin/kubectl
-      - run: echo "$PWD/bin" >> $GITHUB_PATH
-
+      - uses: azure/setup-helm@v5
       - run: |
-          npm ci
-          npm run k8s:deploy:production
+          helm upgrade --install rallly chart \
+            --namespace rallly \
+            -f chart/values-production.yaml \
+            --wait --timeout 300s
