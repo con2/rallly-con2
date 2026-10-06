@@ -6,7 +6,7 @@
 # "Upgrading Rallly").
 image:
   repository: lukevella/rallly
-  tag: 4.15.3
+  tag: 4.15.4
 
 hostname: rallly.example.com
 
